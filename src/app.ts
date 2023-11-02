@@ -1,13 +1,9 @@
-// src/app.ts
 import express from 'express';
+import { configCors } from './middleware/mainMiddlewares';
 
+// Create Express server
 const app = express();
-const port = 3000;
 
-app.get('/', (_req, res) => {
-  res.send('Hello, World!');
-});
+app.use(configCors);
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+export default app;

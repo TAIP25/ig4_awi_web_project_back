@@ -27,8 +27,9 @@ erDiagram
         string Nom "Confidentiel"
         string Prenom "Confidentiel"
         string Email "Confidentiel"
+        string MotDePasse
         string Pseudo "Defaut : Prenom N. + chiffre (unique)"
-        string TailleTeeShirt "S, M, L, XL, XXL"
+        string TailleTShirt "S, M, L, XL, XXL"
         bool Vegetarien "Oui/Non"
         string Hebergement "Recherche/Proposition"
         int JeuPrefere "Optionnel (FK Jeu.ID)"
