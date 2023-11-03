@@ -1,8 +1,9 @@
 import { PrismaClient } from '@prisma/client'
+import { Request, Response } from 'express'
 
 const prisma = new PrismaClient();
 
-export const createBenevole = async (req, res, next) => {
+export const createBenevole = async (req:Request, res:Response) => {
     const benevole = await prisma.benevole.create({
         data: {
             nom: req.body.nom,
@@ -15,7 +16,7 @@ export const createBenevole = async (req, res, next) => {
     res.json(benevole);
 }
 
-export const getBenevole = async (req, res, next) => {
+export const getBenevole = async (req:Request, res:Response) => {
     const benevole = await prisma.benevole.findUnique({
         where: {
             id: parseInt(req.params.id),
@@ -24,12 +25,12 @@ export const getBenevole = async (req, res, next) => {
     res.json(benevole);
 }
 
-export const getBenevoles = async (req, res, next) => {
+export const getBenevoles = async (_req:Request, res:Response) => {
     const benevoles = await prisma.benevole.findMany();
     res.json(benevoles);
 }
 
-export const updateBenevole = async (req, res, next) => {
+export const updateBenevole = async (req:Request, res:Response) => {
     const benevole = await prisma.benevole.update({
         where: {
             id: parseInt(req.params.id),
@@ -45,7 +46,7 @@ export const updateBenevole = async (req, res, next) => {
     res.json(benevole);
 }
 
-export const deleteBenevole = async (req, res, next) => {
+export const deleteBenevole = async (req:Request, res:Response) => {
     const benevole = await prisma.benevole.delete({
         where: {
             id: parseInt(req.params.id),

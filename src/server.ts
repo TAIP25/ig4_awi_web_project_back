@@ -1,6 +1,7 @@
 import { NODE_ENV, PORT } from "./config";
 import { PrismaClient } from "@prisma/client";
 
+
 import app from "./app";
 
 const prisma = new PrismaClient();
