@@ -1,5 +1,5 @@
 import express from 'express';
-import { configCors } from './middleware/mainMiddlewares';
+import { configCors } from './middlewares/mainMiddlewares';
 
 // Create Express server
 const app = express();
