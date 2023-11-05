@@ -1,38 +1,29 @@
-import { PrismaClient, Prisma } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
+
+import benevoleData from './benevoleData'
 
 const prisma = new PrismaClient()
 
-const benevoleData: Prisma.BenevoleCreateInput[] = [
-    {
-        nom: 'Doe',
-        prenom: 'John',
-        email: 'deo.john@email.com',
-        password: '1234',
-        pseudo: 'JohnDoe1234',
-    },
-    {
-        nom: 'Zack',
-        prenom: 'Jack',
-        email: 'zack.jack@email.com',
-        password: '1234',
-        pseudo: 'JackZack1234',
-    },
-    {
-        nom: 'Aveline',
-        prenom: 'Robin',
-        email: 'aveline.robin@email.com',
-        password: '1234',
-        pseudo: 'Yasagi1234',
-    },
-]
-
 async function main() {
     console.log(`Start seeding ...`)
-    for (const b of benevoleData) {
+
+    const startDate = new Date("2023-01-01");
+    const endDate = new Date("2023-11-01");
+
+    const benevoleDataFinal = benevoleData.map((item: { nom: string; prenom: string; email: string; password: string; pseudo: string; }) => ({
+        nom: item.nom,
+        prenom: item.prenom,
+        email: item.email,
+        password: item.password,
+        pseudo: item.pseudo,
+        createdAt: new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime())),
+    }));
+
+    for (const b of benevoleDataFinal) {
             const benevole = await prisma.benevole.create({
             data: b,
         })
-        console.log(`Created user with id: ${benevole.id}`)
+        console.log(`Created benevole with id: ${benevole.id}`)
     }
     console.log(`Seeding finished.`)
 }
