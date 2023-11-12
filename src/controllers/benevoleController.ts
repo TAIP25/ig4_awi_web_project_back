@@ -1,19 +1,44 @@
 import { PrismaClient } from '@prisma/client'
 import { Request, Response } from 'express'
+const isemail = require("isemail");
+const bcrypt = require("bcrypt");
 
 const prisma = new PrismaClient();
 
 export const createBenevole = async (req:Request, res:Response) => {
-    const benevole = await prisma.benevole.create({
-        data: {
-            nom: req.body.nom,
-            prenom: req.body.prenom,
+
+    //Vérification validité email
+    if (!isemail.validate(req.body.email)) {
+        res.status(400).json({error: "Email invalide", severity: "error"});
+        return;
+    }
+
+    //Vérification si email déjà utilisé
+    const checkBenevole = await prisma.benevole.findUnique({
+        where: {
             email: req.body.email,
-            password: req.body.password,
-            pseudo: req.body.pseudo,
         },
     });
-    res.json(benevole);
+    if (checkBenevole != null) {
+        res.status(400).json({error: "Email déjà utilisé", severity: "error"});
+        return;
+    }
+
+    try{
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const benevole = await prisma.benevole.create({
+            data: {
+                nom: req.body.nom,
+                prenom: req.body.prenom,
+                email: req.body.email,
+                password: hashedPassword,
+                pseudo: req.body.pseudo,
+            },
+        });
+        res.status(201).json({benevole, message:"Inscription terminée", severity: "success"});
+    }catch(e){
+        res.status(400).json({error: "Erreur lors de la création du bénévole"});  
+    }
 }
 
 export const getBenevole = async (req:Request, res:Response) => {
