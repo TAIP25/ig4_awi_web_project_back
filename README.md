@@ -22,11 +22,13 @@ erDiagram
     Benevole ||--o{ Association : "Est affilie a"
     Benevole ||--o{ Inscription_Benevole : "Participe a"
     Benevole ||--o{ Jeu_Benevole : "Connait"
+    Benevole ||--o{ Soiree_Decouverte_Inscription : "Participe a"
     Benevole {
         int ID "PK"
         string Nom "Confidentiel"
         string Prenom "Confidentiel"
         string Email "Confidentiel"
+        string Telephone "Confidentiel"
         string MotDePasse
         string Pseudo "Defaut : Prenom N. + chiffre (unique)"
         string TailleTShirt "S, M, L, XL, XXL"
@@ -35,12 +37,14 @@ erDiagram
         int JeuPrefere "Optionnel (FK Jeu.ID)"
         int Photo "Optionnel (A voir comment gerer)"
         int AssociationID "FK Association.ID optionnel"
+        string Statut "Benevole/Responsable/Admin (A FINIR)"
     }
 
     Referent_de_Poste {
         int ID
         int BenevoleID "FK Benevole.ID"
         int PosteID "FK Poste.ID"
+        int FestivalID "FK Festival.ID"
     }
 
     Poste ||--o{ Referent_de_Poste : "A pour referent"
@@ -63,6 +67,7 @@ erDiagram
         int ID
         string Nom
         string Description
+        int FestivalID "FK Festival.ID"
     }
 
     Jeu ||--o{ Jeu_Benevole : "Est connu par"
@@ -78,6 +83,36 @@ erDiagram
         int ID
         int JeuID "FK Jeu.ID"
         int BenevoleID "FK Benevole.ID"
+    }
+
+    Festival ||--|{ Espace_de_Jeu : "Comprend"
+    Festival ||--|{ Referent_de_Poste : "Comprend"
+    Festival {
+        int ID
+        int Edition
+    }
+
+    Soiree_Decouverte ||--|{ Jeu : "Comprend"
+    Soiree_Decouverte ||--|{ Soiree_Decouverte_Inscription : "Est inscrit pour"
+    Soiree_Decouverte {
+        int ID
+        date Date
+        string Lieu
+        string Description
+    }
+
+    Soiree_Decouverte_Inscription {
+        int ID
+        int BenevoleID "FK Benevole.ID"
+        int SoireeDecouverteID "FK Soiree_Decouverte.ID"
+    }
+
+    Festival_Benevole ||--|{ Benevole : "Est affilie a"
+    Festival_Benevole ||--|{ Festival : "Est affilie a"
+    Festival_Benevole {
+        int ID
+        int BenevoleID "FK Benevole.ID"
+        int FestivalID "FK Festival.ID"
     }
     
 ```
