@@ -8,7 +8,7 @@ router.get('/:id', benevoleController.getBenevole);
 
 //===== POST REQUESTS =====//
 router.post('/', benevoleController.createBenevole);
-
+router.post('/login', benevoleController.login);
 
 //===== PUT REQUESTS =====//
 router.put('/:id', benevoleController.updateBenevole);
