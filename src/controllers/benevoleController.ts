@@ -26,6 +26,7 @@ export const createBenevole = async (req:Request, res:Response) => {
         return;
     }
 
+    
     try{
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const benevole = await prisma.benevole.create({
@@ -35,6 +36,9 @@ export const createBenevole = async (req:Request, res:Response) => {
                 email: req.body.email,
                 password: hashedPassword,
                 pseudo: req.body.pseudo,
+                tailleTShirt: req.body.tailleTShirt,
+                vegetarien: req.body.vegetarien,
+                hebergement: req.body.hebergement,
             },
         });
         res.status(201).json({benevole, message:"Inscription terminée", severity: "success"});
