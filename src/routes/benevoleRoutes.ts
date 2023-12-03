@@ -1,5 +1,6 @@
-const express = require('express');
-const benevoleController = require('../controllers/benevoleController');
+import express from 'express';
+//const benevoleController = require('../controllers/benevoleController');
+import * as benevoleController from '../controllers/benevoleController';
 const router = express.Router();
 
 //===== GET REQUESTS =====//
@@ -18,4 +19,4 @@ router.put('/:id', benevoleController.updateBenevole);
 router.delete('/:id', benevoleController.deleteBenevole);
 
 
-module.exports = router;
+export const benevoleRoutes = router;
