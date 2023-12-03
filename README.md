@@ -3,8 +3,9 @@
 ```mermaid
 erDiagram
 
-    Inscription_Benevole ||--|{ Creneau_Horaire : "A lieu pendant"
-    Inscription_Benevole ||--|{ Espace_de_Jeu : "Est inscrit pour"
+    Inscription_Benevole }|--|| Creneau_Horaire : "A lieu pendant"
+    Inscription_Benevole }|--|| Espace_de_Jeu : "Est inscrit pour"
+    Inscription_Benevole }|--|| Festival : "A lieu pendant"
     Inscription_Benevole {
         int ID
         int BenevoleID "FK Benevole.ID"
@@ -23,6 +24,7 @@ erDiagram
     Benevole ||--o{ Inscription_Benevole : "Participe a"
     Benevole ||--o{ Jeu_Benevole : "Connait"
     Benevole ||--o{ Soiree_Decouverte_Inscription : "Participe a"
+    Benevole ||--o{ Referent_de_Poste : "Est referent de"
     Benevole {
         int ID "PK"
         string Nom "Confidentiel"
@@ -38,6 +40,7 @@ erDiagram
         int Photo "Optionnel (A voir comment gerer)"
         int AssociationID "FK Association.ID optionnel"
         string Statut "Benevole/Responsable/Admin (A FINIR)"
+        string Adresse "Confidentiel"
     }
 
     Referent_de_Poste {
@@ -62,7 +65,7 @@ erDiagram
         date DateFin
     }
 
-    Espace_de_Jeu ||--|{ Jeu : "Comprend"
+    Espace_de_Jeu ||--|{ Sous_Espace_de_Jeu : "Comprend"
     Espace_de_Jeu {
         int ID
         string Nom
@@ -70,13 +73,34 @@ erDiagram
         int FestivalID "FK Festival.ID"
     }
 
+    Sous_Espace_de_Jeu ||--|{ Jeu : "Comprend"
+    Sous_Espace_de_Jeu {
+        int ID
+        char Lettre "A, B, C, D ou Optionnel"
+        int EspaceDeJeuID "FK Espace_de_Jeu.ID"
+    }
+
     Jeu ||--o{ Jeu_Benevole : "Est connu par"
     Jeu {
         int ID 
         string Nom
+        string Auteur "Optionnel"
+        string Editeur "Optionnel"
+        string NbJoueurs "Optionnel"
+        string AgeMin "Optionnel"
+        string Duree "Optionnel"
+        string Type "Optionnel"
+        string Notice "Optionnel"
+        int SousEspaceDeJeuID "FK Sous_Espace_de_Jeu.ID"
+        int IdZone
+        bool AAnimer "Oui/Non"
         bool Recu "Oui/Non"
-        string LienSite
-        int EspaceDeJeu "FK Espace_de_Jeu.ID"
+        string Mecanique "Optionnel"
+        string Theme "Optionnel"
+        string Tag "Optionnel"
+        string Description "Optionnel"
+        string logo "Optionnel"
+        string video "Optionnel"
     }
 
     Jeu_Benevole {
@@ -113,7 +137,14 @@ erDiagram
         int ID
         int BenevoleID "FK Benevole.ID"
         int FestivalID "FK Festival.ID"
+        bool presenceSamedi "Oui/Non"
+        bool presenceDimanche "Oui/Non"
+        bool repasSamediMidi "Oui/Non"
+        bool repasSamediSoir "Oui/Non"
+        bool repasDimanche "Oui/Non"
+        bool teeShirtPris "Oui/Non"
     }
+
     
 ```
 
