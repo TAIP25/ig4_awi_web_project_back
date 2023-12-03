@@ -69,12 +69,15 @@ model ReferentPoste {
 
     //@@unique([benevoleID, posteID, festivalID])
 }
+
 model InscriptionBenevole {
     id        Int      @id @default(autoincrement())
     benevole  Benevole @relation(fields: [benevoleID], references: [id])
     benevoleID Int
     poste     Poste    @relation(fields: [posteID], references: [id])
     posteID   Int
+    creneauHoraire CreneauHoraire @relation(fields: [creneauHoraireID], references: [id])
+    creneauHoraireID Int
     statut    String @default("En attente")
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -101,4 +104,10 @@ model FestivalBenevole {
     //@@unique([benevoleID, festivalID])
 }
 
-
+model CreneauHoraire {
+    id       Int      @id @default(autoincrement())
+    jour    String
+    heureDebut Int
+    heureFin Int
+    inscriptionBenevoles InscriptionBenevole[]
+}
