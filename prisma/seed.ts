@@ -1,14 +1,15 @@
 import { PrismaClient } from '@prisma/client'
 
 import benevoleData from './benevoleData'
+import creneauHoraireData from './creneauHoraireData';
 
 const prisma = new PrismaClient()
 
-async function main() {
-    console.log(`Start seeding ...`)
+async function addBenevole() {
 
     const startDate = new Date("2023-01-01");
     const endDate = new Date("2023-11-01");
+    let error : number = 0;
 
     const benevoleDataFinal = benevoleData.map((item: { nom: string; prenom: string; email: string; password: string; pseudo: string; }) => ({
         nom: item.nom,
@@ -20,11 +21,38 @@ async function main() {
     }));
 
     for (const b of benevoleDataFinal) {
-            const benevole = await prisma.benevole.create({
-            data: b,
-        })
-        console.log(`Created benevole with id: ${benevole.id}`)
+        try {
+            await prisma.benevole.create({
+                data: b,
+            })
+        }
+        catch (e) {
+            error++;
+        }
     }
+    console.log(`Seeding of benevole finished with ${error} errors and ${benevoleDataFinal.length - error} success.`)
+}
+
+async function addCreneauHoraire() {
+
+    let error : number = 0;
+
+    for (const c of creneauHoraireData) {
+        try {
+            await prisma.creneauHoraire.create({
+                data: c,
+            })
+        } catch (e) {
+            error++;
+        }
+    }
+    console.log(`Seeding of creneauHoraire finished with ${error} errors and ${creneauHoraireData.length - error} success.`)
+}
+
+async function main() {
+    console.log(`Start seeding ...`)
+    await addBenevole();
+    await addCreneauHoraire();
     console.log(`Seeding finished.`)
 }
 
