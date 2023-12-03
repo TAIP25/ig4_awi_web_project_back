@@ -98,6 +98,7 @@ export const updateBenevole = async (req:Request, res:Response) => {
     res.json(benevole);
 }
 
+
 export const deleteBenevole = async (req:Request, res:Response) => {
     const benevole = await prisma.benevole.delete({
         where: {
