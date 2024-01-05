@@ -28,7 +28,7 @@ export const createAssociation = async (req:Request, res:Response) => {
 //===================================//
 
 //=== Get All Associations ===//
-export const getAllAssociations = async (req:Request, res:Response) => {
+export const getAllAssociations = async (_req:Request, res:Response) => {
     try{
         const associations = await prisma.association.findMany();
         res.status(200).json(associations);

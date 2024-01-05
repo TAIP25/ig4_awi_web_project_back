@@ -16,6 +16,7 @@ const prisma = new PrismaClient();
 //=== Signup ===//
 export const createBenevole = async (req:Request, res:Response) => {
 
+
     //Vérification validité email
     if (!isemail.validate(req.body.email)) {
         res.status(400).json({error: "Email invalide", severity: "error"});
