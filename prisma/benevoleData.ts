@@ -13,6 +13,7 @@ const benevoleData: Prisma.BenevoleCreateInput[] = jsonData.map((item: { nom: st
     password: item.password,
     pseudo: item.pseudo,
 }));
-console.log(benevoleData[0])
+
+//console.log(benevoleData[0])
 
 export default benevoleData;
