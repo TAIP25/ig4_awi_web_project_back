@@ -10,6 +10,7 @@ export const createFestival = async (req:Request, res:Response) => {
         const festival = await prisma.festival.create({
             data: {
                 edition: req.body.edition,
+                dateDebut: req.body.dateDebut,
             }
         });
         res.status(201).json({festival, message:"Festival créé", severity: "success"});
@@ -51,6 +52,7 @@ export const updateFestival = async (req:Request, res:Response) => {
             },
             data: {
                 edition: req.body.edition,
+                dateDebut: req.body.dateDebut,
             }
         });
         res.status(200).json({festival, message:"Festival modifié", severity: "success"});

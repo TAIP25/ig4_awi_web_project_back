@@ -2,7 +2,7 @@ import { Prisma } from '@prisma/client'
 import * as fs from 'fs';
 
 // Ce json à été généré avec mockaroo.com
-const rawData = fs.readFileSync('prisma/benevoleData.json', 'utf8');
+const rawData = fs.readFileSync('prisma/data/benevoleData.json', 'utf8');
 
 const jsonData = JSON.parse(rawData);
 

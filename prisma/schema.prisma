@@ -1,113 +1,116 @@
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Benevole {
-    id        Int      @id @default(autoincrement())
-    nom       String
-    prenom    String
-    email     String   @unique
-    password  String
-    pseudo    String   @unique
-    tailleTShirt String?
-    vegetarien Boolean?
-    hebergement String?
-    gameFavori Int?
-    picture   Int?
-    associationID Int?
-    adresse   String?
-    association Association? @relation(fields: [associationID], references: [id])
-    inscriptions InscriptionBenevole[]
-    referentPostes ReferentPoste[]
-    festivalBenevoles FestivalBenevole[]
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  id                Int                   @id @default(autoincrement())
+  nom               String
+  prenom            String
+  email             String                @unique
+  password          String
+  pseudo            String                @unique
+  tailleTShirt      String?
+  vegetarien        Boolean?
+  hebergement       String?
+  gameFavori        Int?
+  picture           Int?
+  associationID     Int?
+  adresse           String?
+  association       Association?          @relation(fields: [associationID], references: [id])
+  inscriptions      InscriptionBenevole[]
+  referentPostes    ReferentPoste[]
+  festivalBenevoles FestivalBenevole[]
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
 }
 
 model Festival {
-    id        Int      @id @default(autoincrement())
-    edition       String
-    referentPostes ReferentPoste[]
-    benevoles FestivalBenevole[]
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  id                  Int                   @id @default(autoincrement())
+  edition             String
+  dateDebut           DateTime
+  referentPostes      ReferentPoste[]
+  benevoles           FestivalBenevole[]
+  inscriptionBenevole InscriptionBenevole[]
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
 }
 
 model Association {
-    id        Int      @id @default(autoincrement())
-    nom       String
-    benevoles Benevole[]
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  id        Int        @id @default(autoincrement())
+  nom       String
+  benevoles Benevole[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
 model Poste {
-    id        Int      @id @default(autoincrement())
-    nom       String @unique
-    description String
-    inscriptionBenevoles InscriptionBenevole[]
-    referentPostes ReferentPoste[]
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  id                   Int                   @id @default(autoincrement())
+  nom                  String                @unique
+  description          String
+  inscriptionBenevoles InscriptionBenevole[]
+  referentPostes       ReferentPoste[]
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
 }
 
 model ReferentPoste {
-    id        Int      @id @default(autoincrement())
-    poste     Poste    @relation(fields: [posteID], references: [id])
-    posteID   Int
-    benevole  Benevole @relation(fields: [benevoleID], references: [id])
-    benevoleID Int
-    festival  Festival @relation(fields: [festivalID], references: [id])
-    festivalID Int
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  id         Int      @id @default(autoincrement())
+  poste      Poste    @relation(fields: [posteID], references: [id])
+  posteID    Int
+  benevole   Benevole @relation(fields: [benevoleID], references: [id])
+  benevoleID Int
+  festival   Festival @relation(fields: [festivalID], references: [id])
+  festivalID Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
-    //@@unique([benevoleID, posteID, festivalID])
+  //@@unique([benevoleID, posteID, festivalID])
 }
 
 model InscriptionBenevole {
-    id        Int      @id @default(autoincrement())
-    benevole  Benevole @relation(fields: [benevoleID], references: [id])
-    benevoleID Int
-    poste     Poste    @relation(fields: [posteID], references: [id])
-    posteID   Int
-    creneauHoraire CreneauHoraire @relation(fields: [creneauHoraireID], references: [id])
-    creneauHoraireID Int
-    statut    String @default("En attente")
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  id               Int            @id @default(autoincrement())
+  benevole         Benevole       @relation(fields: [benevoleID], references: [id])
+  benevoleID       Int
+  poste            Poste          @relation(fields: [posteID], references: [id])
+  posteID          Int
+  creneauHoraire   CreneauHoraire @relation(fields: [creneauHoraireID], references: [id])
+  creneauHoraireID Int
+  festival         Festival       @relation(fields: [festivalID], references: [id])
+  festivalID       Int
+  status           Boolean?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
 
-    //@@unique([benevoleID, posteID])
-
+  //@@unique([benevoleID, posteID])
 }
 
 model FestivalBenevole {
-    id        Int      @id @default(autoincrement())
-    festival  Festival @relation(fields: [festivalID], references: [id])
-    festivalID Int
-    benevole  Benevole @relation(fields: [benevoleID], references: [id])
-    benevoleID Int
-    presenceSamedi Boolean?
-    presenceDimanche Boolean?
-    repasSamediMidi Boolean?
-    repasSamediSoir Boolean?
-    repasDimancheMidi Boolean?
-    tShirtPris Boolean?
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  id                Int      @id @default(autoincrement())
+  festival          Festival @relation(fields: [festivalID], references: [id])
+  festivalID        Int
+  benevole          Benevole @relation(fields: [benevoleID], references: [id])
+  benevoleID        Int
+  presenceSamedi    Boolean?
+  presenceDimanche  Boolean?
+  repasSamediMidi   Boolean?
+  repasSamediSoir   Boolean?
+  repasDimancheMidi Boolean?
+  tShirtPris        Boolean?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
-    //@@unique([benevoleID, festivalID])
+  //@@unique([benevoleID, festivalID])
 }
 
 model CreneauHoraire {
-    id       Int      @id @default(autoincrement())
-    jour    String
-    heureDebut Int
-    heureFin Int
-    inscriptionBenevoles InscriptionBenevole[]
+  id                   Int                   @id @default(autoincrement())
+  jour                 String
+  heureDebut           Int
+  heureFin             Int
+  inscriptionBenevoles InscriptionBenevole[]
 }

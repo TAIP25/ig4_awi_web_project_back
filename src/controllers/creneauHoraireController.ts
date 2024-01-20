@@ -23,7 +23,7 @@ export const getCreneauHoraireById = async (req:Request, res:Response) => {
                 id: parseInt(req.params.id),
             },
         });
-        return res.status(200).json({creneauHoraire, message:"Liste des créneaux horaires", severity: "success"});
+        return res.status(200).json({creneauHoraire, message:"Créneau horaire récupéré", severity: "success"});
     } catch(e){
         return res.status(500).json({error: "Erreur lors de la récupération des créneaux horaires", severity: "error"});
     }
