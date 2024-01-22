@@ -112,18 +112,18 @@ export const getInscriptionById = async (req:Request, res:Response) => {
 }
 
 // Get all number of inscriptions for a festival
-export const getNbInscriptionsByPoste = async (req:Request, res:Response) => {
+export const getNbInscriptions = async (req:Request, res:Response) => {
     if(req.params.id == null){
         return res.status(400).json({error: "Champs manquants", severity: "error"});
     }
     try{
         const inscription = await prisma.inscriptionBenevole.groupBy({
-            by: ['posteID'],
+            by: ['posteID', 'creneauHoraireID'],
             where: {
                 festivalID: parseInt(req.params.id),
             },
             _count: {
-                posteID: true,
+                id: true,
             },
         });
 
