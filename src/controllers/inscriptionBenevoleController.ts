@@ -143,7 +143,7 @@ export const createInscription = async (req:Request, res:Response) => {
     }
     // Check if the benevole has not already been accepted for this creneauHoraire and this festival
     try {
-        const inscription = await prisma.inscriptionBenevole.findMany({
+        const inscription = await prisma.inscriptionBenevole.findFirst({
             where: {
                 benevoleID: req.body.benevoleID,
                 festivalID: req.body.festivalID,
@@ -151,12 +151,42 @@ export const createInscription = async (req:Request, res:Response) => {
                 status: true,
             },
         });
-        if(inscription.length > 0){
+        if(inscription != null){
             return res.status(400).json({error: "Inscription à ce créneau à déjà été acceptée", severity: "error"});
         }
     } catch(e){
         return res.status(500).json({error: "Erreur lors de la récupération des inscriptions", severity: "error"});
     }
+    // Check if the poste is not already full for this creneauHoraire and this festival
+    try{
+        const inscription = await prisma.inscriptionBenevole.groupBy({
+            by: ['posteID', 'creneauHoraireID', 'festivalID'],
+            where: {
+                posteID: req.body.posteID,
+                creneauHoraireID: req.body.creneauHoraireID,
+                festivalID: req.body.festivalID,
+            },
+            _count: {
+                id: true,
+            },
+        });
+
+        // If the inscription is null, it means that there is no inscription for this poste at this creneauHoraire
+        if(inscription[0] != null){
+            const poste = await prisma.poste.findUnique({
+                where: {
+                    id: req.body.posteID,
+                },
+            });
+
+            if(poste && poste.nombreBenevoles && inscription[0]._count.id >= poste.nombreBenevoles){
+                return res.status(400).json({error: "Le poste est déjà complet", severity: "error"});
+            }
+        }
+    } catch(e){
+        return res.status(500).json({error: "Erreur lors de la récupération des inscriptions", severity: "error"});
+    }
+    // Create the inscription
     try{
         const inscription = await prisma.inscriptionBenevole.create({
             data: {
@@ -168,7 +198,11 @@ export const createInscription = async (req:Request, res:Response) => {
         });
         return res.status(200).json({inscription, message:"Création de l'inscription réussie", severity: "success"});
     }catch(e){
-        return res.status(500).json({error: "Erreur lors de la création de l'inscription", severity: "error"});  
+        if(e.code == "P2002"){
+            return res.status(400).json({error: "Inscription déjà existante", severity: "error"});
+        } else {
+            return res.status(500).json({error: "Erreur lors de la création de l'inscription", severity: "error"});
+        }
     }
 }
 
