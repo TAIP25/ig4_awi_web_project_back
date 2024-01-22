@@ -33,7 +33,7 @@ model Festival {
   id                  Int                   @id @default(autoincrement())
   edition             String
   dateDebut           DateTime
-  referentPostes      ReferentPoste[]
+  postes              Poste[]
   benevoles           FestivalBenevole[]
   inscriptionBenevole InscriptionBenevole[]
   createdAt           DateTime              @default(now())
@@ -50,12 +50,17 @@ model Association {
 
 model Poste {
   id                   Int                   @id @default(autoincrement())
-  nom                  String                @unique
+  festival             Festival              @relation(fields: [festivalID], references: [id])
+  festivalID           Int
+  nom                  String
   description          String
+  nombreBenevoles      Int
   inscriptionBenevoles InscriptionBenevole[]
   referentPostes       ReferentPoste[]
   createdAt            DateTime              @default(now())
   updatedAt            DateTime              @updatedAt
+
+  @@unique([festivalID, nom], name: "PosteUniqueWithFestivalName")
 }
 
 model ReferentPoste {
@@ -64,12 +69,10 @@ model ReferentPoste {
   posteID    Int
   benevole   Benevole @relation(fields: [benevoleID], references: [id])
   benevoleID Int
-  festival   Festival @relation(fields: [festivalID], references: [id])
-  festivalID Int
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  //@@unique([benevoleID, posteID, festivalID])
+  @@unique([benevoleID, posteID])
 }
 
 model InscriptionBenevole {
@@ -86,7 +89,7 @@ model InscriptionBenevole {
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
 
-  //@@unique([benevoleID, posteID])
+  @@unique([benevoleID, posteID, creneauHoraireID, festivalID])
 }
 
 model FestivalBenevole {
@@ -113,4 +116,6 @@ model CreneauHoraire {
   heureDebut           Int
   heureFin             Int
   inscriptionBenevoles InscriptionBenevole[]
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
 }

@@ -1,5 +1,7 @@
 # MCD
 
+TODO : Ce n'ai pas la mm chose que sur prisma à check
+
 ```mermaid
 erDiagram
 

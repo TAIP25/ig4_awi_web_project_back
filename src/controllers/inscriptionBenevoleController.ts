@@ -111,12 +111,51 @@ export const getInscriptionById = async (req:Request, res:Response) => {
 	}
 }
 
+// Get all number of inscriptions for a festival
+export const getNbInscriptionsByPoste = async (req:Request, res:Response) => {
+    if(req.params.id == null){
+        return res.status(400).json({error: "Champs manquants", severity: "error"});
+    }
+    try{
+        const inscription = await prisma.inscriptionBenevole.groupBy({
+            by: ['posteID'],
+            where: {
+                festivalID: parseInt(req.params.id),
+            },
+            _count: {
+                posteID: true,
+            },
+        });
+
+        return res.status(200).json({inscription, message:"Nombre d'inscriptions récupéré", severity: "success"});
+    } catch(e){
+        return res.status(500).json({error: "Erreur lors de la récupération du nombre d'inscriptions", severity: "error"});
+    }
+}
+
 //================ POST ================//
 
 // Create an inscription
 export const createInscription = async (req:Request, res:Response) => {
+    // Check if the parameters are correctly set
     if(req.body.benevoleID == null || req.body.festivalID == null || req.body.creneauHoraireID == null || req.body.posteID == null){
         return res.status(400).json({error: "Champs manquants", severity: "error"});
+    }
+    // Check if the benevole has not already been accepted for this creneauHoraire and this festival
+    try {
+        const inscription = await prisma.inscriptionBenevole.findMany({
+            where: {
+                benevoleID: req.body.benevoleID,
+                festivalID: req.body.festivalID,
+                creneauHoraireID: req.body.creneauHoraireID,
+                status: true,
+            },
+        });
+        if(inscription.length > 0){
+            return res.status(400).json({error: "Inscription à ce créneau à déjà été acceptée", severity: "error"});
+        }
+    } catch(e){
+        return res.status(500).json({error: "Erreur lors de la récupération des inscriptions", severity: "error"});
     }
     try{
         const inscription = await prisma.inscriptionBenevole.create({

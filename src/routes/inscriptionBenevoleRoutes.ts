@@ -5,7 +5,8 @@ import {
   getInscriptionsByPoste, 
   getInscriptionsByCreneauHoraire,
   getInscriptionsByCreneauHoraireAndPoste, 
-  getInscriptionById, 
+  getInscriptionById,
+  getNbInscriptionsByPoste,
   createInscription, 
   updateInscription, 
   deleteInscription 
@@ -19,6 +20,7 @@ router.get('/festival/:id/poste/:posteId', getInscriptionsByPoste);
 router.get('/festival/:id/creneauxHoraire/:creneauHoraireId', getInscriptionsByCreneauHoraire);
 router.get('/festival/:id/creneauxHoraire/:creneauHoraireId/poste/:posteId', getInscriptionsByCreneauHoraireAndPoste);
 router.get('/:id', getInscriptionById);
+router.get('/festival/:id/count', getNbInscriptionsByPoste);
 
 //===== POST REQUESTS =====//
 router.post('/', createInscription);
