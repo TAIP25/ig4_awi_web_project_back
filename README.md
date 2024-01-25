@@ -1,5 +1,7 @@
 # MCD
 
+TODO : Ce n'ai pas la mm chose que sur prisma à check
+
 ```mermaid
 erDiagram
 
@@ -11,8 +13,9 @@ erDiagram
         int BenevoleID "FK Benevole.ID"
         int PosteID "FK Poste.ID"
         int CreneauHoraireID "FK Creneau_Horaire.ID"
+        int FestivalID "FK Festival.ID"
         int EspaceDeJeuID "FK Espace_de_Jeu.ID optionnel"
-        string Statut "En attente/Valide/Refuse"
+        bool Status "En attente=NULL / Valide=true / Refuse=false"
     }
 
     Association {
@@ -93,7 +96,7 @@ erDiagram
         string Notice "Optionnel"
         int SousEspaceDeJeuID "FK Sous_Espace_de_Jeu.ID"
         int IdZone
-        bool AAnimer "Oui/Non"
+        bool Animer "Oui/Non"
         bool Recu "Oui/Non"
         string Mecanique "Optionnel"
         string Theme "Optionnel"
@@ -113,7 +116,8 @@ erDiagram
     Festival ||--|{ Referent_de_Poste : "Comprend"
     Festival {
         int ID
-        int Edition
+        string Edition
+        date DateDebut
     }
 
     Soiree_Decouverte ||--|{ Jeu : "Comprend"

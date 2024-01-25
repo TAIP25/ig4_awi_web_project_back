@@ -6,6 +6,7 @@ import { associationRoutes } from './routes/associationRoutes';
 import { festivalBenevoleRoutes } from './routes/festivalBenevoleRoutes';
 import { posteRoutes } from './routes/posteRoutes';
 import { creneauHoraireRoutes } from './routes/creneauHoraireRoutes';
+import { inscriptionBenevoleRoutes } from './routes/inscriptionBenevoleRoutes';
 
 // Create Express server
 const app = express();
@@ -21,5 +22,6 @@ app.use('/association', associationRoutes);
 app.use('/festivalBenevole', festivalBenevoleRoutes);
 app.use('/poste', posteRoutes);
 app.use('/creneauHoraire', creneauHoraireRoutes);
+app.use('/inscriptionBenevole', inscriptionBenevoleRoutes);
 
 export default app;

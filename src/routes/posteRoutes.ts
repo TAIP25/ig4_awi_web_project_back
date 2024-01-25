@@ -3,9 +3,9 @@ import { getPostes, getPosteById, getPosteByName, createPoste, updatePoste } fro
 const router = express.Router();
 
 //===== GET REQUESTS =====//
-router.get('/', getPostes);
+router.get('/festival/:id', getPostes);
 router.get('/:id', getPosteById);
-router.get('/nom/:nom', getPosteByName);
+router.get('/festival/:id/nom/:nom', getPosteByName);
 
 //===== POST REQUESTS =====//
 router.post('/', createPoste);
