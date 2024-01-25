@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client'
 
 import benevoleData from './benevoleData'
 import creneauHoraireData from './creneauHoraireData';
+import festivalData from './festivalData';
 
 const prisma = new PrismaClient()
 
@@ -49,10 +50,31 @@ async function addCreneauHoraire() {
     console.log(`Seeding of creneauHoraire finished with ${error} errors and ${creneauHoraireData.length - error} success.`)
 }
 
+async function addFestival() {
+     let error : number = 0;
+
+    for (const f of festivalData) {
+        try {
+            await prisma.festival.create({
+                data: {
+                    edition: f.edition,
+                    dateDebut: new Date(f.dateDebut),
+                    dateFin: new Date(f.dateFin),
+                }
+            })
+        } catch (e) {
+            error++;
+        }
+    }
+    console.log(`Seeding of festival finished with ${error} errors and ${festivalData.length - error} success.`)
+}
+
+
 async function main() {
     console.log(`Start seeding ...`)
     await addBenevole();
     await addCreneauHoraire();
+    await addFestival();
     console.log(`Seeding finished.`)
 }
 

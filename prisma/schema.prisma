@@ -14,13 +14,15 @@ model Benevole {
     email     String   @unique
     password  String
     pseudo    String   @unique
+    statut   String @default("Benevole")
     tailleTShirt String?
     vegetarien Boolean?
     hebergement String?
-    gameFavori Int?
+    jeuFavori String?
     picture   Int?
     associationID Int?
     adresse   String?
+    telephone String?
     association Association? @relation(fields: [associationID], references: [id])
     inscriptions InscriptionBenevole[]
     referentPostes ReferentPoste[]
@@ -32,6 +34,8 @@ model Benevole {
 model Festival {
     id        Int      @id @default(autoincrement())
     edition       String
+    dateDebut DateTime
+    dateFin DateTime
     referentPostes ReferentPoste[]
     benevoles FestivalBenevole[]
     createdAt DateTime @default(now())

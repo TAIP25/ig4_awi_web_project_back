@@ -121,6 +121,8 @@ export const updateBenevole = async (req:Request, res:Response) => {
             vegetarien: req.body.vegetarien,
             hebergement: req.body.hebergement,
             adresse: req.body.adresse,
+            telephone: req.body.telephone,
+            jeuFavori: req.body.jeuFavori,
         },
     });
     res.json(benevole);

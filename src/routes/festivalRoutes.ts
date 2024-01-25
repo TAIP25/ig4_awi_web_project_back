@@ -5,7 +5,9 @@ const router = express.Router();
 
 //===== GET REQUESTS =====//
 router.get('/', festivalController.getAllFestivals);
+router.get('/next', festivalController.getNextFestival);
 router.get('/:id', festivalController.getFestivalById);
+
 
 //===== POST REQUESTS =====//
 router.post('/', festivalController.createFestival);

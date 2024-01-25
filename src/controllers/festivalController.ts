@@ -10,6 +10,8 @@ export const createFestival = async (req:Request, res:Response) => {
         const festival = await prisma.festival.create({
             data: {
                 edition: req.body.edition,
+                dateDebut: req.body.dateDebut,
+                dateFin: req.body.dateFin
             }
         });
         res.status(201).json({festival, message:"Festival créé", severity: "success"});
@@ -17,6 +19,10 @@ export const createFestival = async (req:Request, res:Response) => {
         res.status(400).json({error: "Erreur lors de la création du festival"});  
     }
 }
+
+//===================================================================//
+//=========================== GET REQUESTS ==========================//
+//===================================================================//
 
 //=== Get All Festivals ===//
 export const getAllFestivals = async (_req:Request, res:Response) => {
@@ -30,6 +36,7 @@ export const getAllFestivals = async (_req:Request, res:Response) => {
 
 //=== Get One Festival ===//
 export const getFestivalById = async (req:Request, res:Response) => {
+    console.log("test");
     try{
         const festival = await prisma.festival.findUnique({
             where: {
@@ -41,6 +48,34 @@ export const getFestivalById = async (req:Request, res:Response) => {
         res.status(400).json({error: "Erreur lors de la récupération du festival"});  
     }
 }
+
+//=== Get next Festival ===//
+export const getNextFestival = async (_req:Request, res:Response) => {
+    //console.log("test");
+    try{
+        // Get current date
+        const currentDate = new Date();
+        // Get next festival just after current date using gt (greater than) and order by dateDebut
+        const festival = await prisma.festival.findFirst({
+            where: {
+                dateDebut: {
+                    gt: currentDate
+                }
+            },
+            orderBy: {
+                dateDebut: "asc"
+            }
+        });
+
+        res.status(200).json(festival);
+    }catch(e){
+        res.status(400).json({error: "Erreur lors de la récupération du festival"});  
+    }
+}
+
+//===================================================================//
+//=========================== PUT REQUESTS ==========================//
+//===================================================================//
 
 //=== Update Festival ===//
 export const updateFestival = async (req:Request, res:Response) => {
