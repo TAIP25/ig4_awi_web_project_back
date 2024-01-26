@@ -54,22 +54,48 @@ async function addCreneauHoraire() {
 }
 
 async function addFestival() {
-     let error : number = 0;
+    let error : number = 0;
+
+     // Liste des festivals initialisée vide
+    let festivals = [];
 
     for (const f of festivalData) {
         try {
-            await prisma.festival.create({
+            const Festival = await prisma.festival.create({
                 data: {
                     edition: f.edition,
                     dateDebut: new Date(f.dateDebut),
                     dateFin: new Date(f.dateFin),
                 }
             })
+            festivals.push(Festival);
         } catch (e) {
             error++;
         }
     }
     console.log(`Seeding of festival finished with ${error} errors and ${festivalData.length - error} success.`)
+    return festivals;
+}
+
+async function addFestivalPoste(postes: any, festivals: any){
+
+    // Pour chaque festival et pour chaque poste, on crée une association
+
+    let error : number = 0;
+    for (const f of festivals) {
+        for (const p of postes) {
+            try {
+                await prisma.festivalPoste.create({
+                    data: {
+                        festivalID: f.id,
+                        posteID: p.id,
+                    }
+                })
+            } catch (e) {
+                error++;
+            }
+        }
+    }
 }
 
 
@@ -99,16 +125,21 @@ async function addPoste() {
         
     let error : number = 0;
 
+    // Liste des postes initialisée vide
+    let postes = [];
+
     for (const p of posteData) {
         try {
-            await prisma.poste.create({
+            const Poste = await prisma.poste.create({
                 data: p,
             })
+            postes.push(Poste);
         } catch (e) {
             error++;
         }
     }
     console.log(`Seeding of poste finished with ${error} errors and ${posteData.length - error} success.`)
+    return postes;
 }
 
 
@@ -123,9 +154,11 @@ async function main() {
         
         await addBenevole();
 
-        await addFestival();
+        const festivals =  await addFestival();
 
-        await addPoste();
+        const postes = await addPoste();
+
+        await addFestivalPoste(postes, festivals);
 
         await addInsciptionBenevole();
 

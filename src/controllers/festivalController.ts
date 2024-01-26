@@ -36,7 +36,6 @@ export const getAllFestivals = async (_req:Request, res:Response) => {
 
 //=== Get One Festival ===//
 export const getFestivalById = async (req:Request, res:Response) => {
-    console.log("test");
     try{
         const festival = await prisma.festival.findUnique({
             where: {
@@ -51,7 +50,6 @@ export const getFestivalById = async (req:Request, res:Response) => {
 
 //=== Get next Festival ===//
 export const getNextFestival = async (_req:Request, res:Response) => {
-    //console.log("test");
     try{
         // Get current date
         const currentDate = new Date();

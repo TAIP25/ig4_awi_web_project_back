@@ -40,9 +40,9 @@ model Festival {
   dateDebut           DateTime
   dateFin             DateTime
   //referentPostes      ReferentPoste[]
-  postes              Poste[]
   benevoles           FestivalBenevole[]
   inscriptionBenevole InscriptionBenevole[]
+  festivalPostes      FestivalPoste[]
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
 }
@@ -57,17 +57,26 @@ model Association {
 
 model Poste {
   id                   Int                   @id @default(autoincrement())
-  festival             Festival              @relation(fields: [festivalID], references: [id])
-  festivalID           Int
   nom                  String
   description          String
   nombreBenevoles      Int
   inscriptionBenevoles InscriptionBenevole[]
   referentPostes       ReferentPoste[]
+  festivalPostes       FestivalPoste[]
   createdAt            DateTime              @default(now())
   updatedAt            DateTime              @updatedAt
 
-  @@unique([festivalID, nom], name: "PosteUniqueWithFestivalName")
+}
+
+model FestivalPoste {
+  id        Int      @id @default(autoincrement())
+  poste     Poste    @relation(fields: [posteID], references: [id])
+  posteID   Int
+  festival  Festival @relation(fields: [festivalID], references: [id])
+  festivalID Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([posteID, festivalID])
 }
 
 model ReferentPoste {
