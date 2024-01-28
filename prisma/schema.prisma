@@ -101,7 +101,7 @@ model InscriptionBenevole {
   creneauHoraireID Int
   festival         Festival       @relation(fields: [festivalID], references: [id])
   festivalID       Int
-  status           Boolean?
+  status           String         @default("En attente")
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
 

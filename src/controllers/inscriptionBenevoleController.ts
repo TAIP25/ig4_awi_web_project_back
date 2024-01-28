@@ -15,6 +15,7 @@ export const getInscriptions = async (req:Request, res:Response) => {
                 festivalID: parseInt(req.params.id),
             },
         });
+        console.log(inscription);
         return res.status(200).json({inscription, message:"Liste des inscriptions", severity: "success"});
     } catch(e){
         return res.status(500).json({error: "Erreur lors de la récupération des inscriptions", severity: "error"});
@@ -52,6 +53,26 @@ export const getInscriptionsByPoste = async (req:Request, res:Response) => {
             },
         });
         return res.status(200).json({inscription, message:"Liste des inscriptions", severity: "success"});
+    } catch(e){
+        return res.status(500).json({error: "Erreur lors de la récupération des inscriptions", severity: "error"});
+    }
+}
+
+// Get all inscriptions with status at null
+export const getInscriptionsWithStatusNull = async (_req:Request, res:Response) => {
+    try{
+        const inscriptions = await prisma.inscriptionBenevole.findMany({
+            where: {
+                status: "En attente",
+            },
+            include: {
+                creneauHoraire: true,
+                poste: true,
+                benevole: true,
+            },
+        });
+        console.log(inscriptions);
+        return res.status(200).json({inscriptions, message:"Liste des inscriptions", severity: "success"});
     } catch(e){
         return res.status(500).json({error: "Erreur lors de la récupération des inscriptions", severity: "error"});
     }
@@ -121,6 +142,9 @@ export const getNbInscriptions = async (req:Request, res:Response) => {
             by: ['posteID', 'creneauHoraireID'],
             where: {
                 festivalID: parseInt(req.params.id),
+                status: {
+                    in: ["En attente", "Accepté"],
+                },
             },
             _count: {
                 id: true,
@@ -148,7 +172,7 @@ export const createInscription = async (req:Request, res:Response) => {
                 benevoleID: req.body.benevoleID,
                 festivalID: req.body.festivalID,
                 creneauHoraireID: req.body.creneauHoraireID,
-                status: true,
+                status: "Accepté",
             },
         });
         if(inscription != null){
@@ -210,7 +234,7 @@ export const createInscription = async (req:Request, res:Response) => {
 
 // Update an inscription
 export const updateInscription = async (req:Request, res:Response) => {
-	if(req.body.id == null || req.body.status == null){
+	if(req.body.id == null || req.body.status == "En Attente"){
 		return res.status(400).json({error: "Champs manquants", severity: "error"});
 	}
 	try{

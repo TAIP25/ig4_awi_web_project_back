@@ -20,9 +20,6 @@ export const getPostes = async (req: Request, res: Response) => {
             },
         });
 
-        console.log("Postes:");
-        console.log(postes);
-
         return res.status(200).json({ postes: postes.map(fp => fp.poste), message: "Liste des postes", severity: "success" });
     } catch (e) {
         return res.status(500).json({ error: "Erreur lors de la récupération des postes", severity: "error" });

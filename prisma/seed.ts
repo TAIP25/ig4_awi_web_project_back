@@ -5,6 +5,7 @@ import benevoleData from './data/benevoleData'
 import creneauHoraireData from './data/creneauHoraireData';
 import festivalData from './data/festivalData';
 import posteData from './data/posteData';
+import bcrypt from 'bcrypt';
 
 
 const prisma = new PrismaClient()
@@ -15,11 +16,28 @@ async function addBenevole() {
     const endDate = new Date("2023-11-01");
     let error : number = 0;
 
+    // Add the admin before the others
+    try {
+        await prisma.benevole.create({
+            data: {
+                nom: "NOEL",
+                prenom: "Sam",
+                email: "sam.noel@gmail.com",
+                password: bcrypt.hashSync("admin", 10),
+                pseudo: "Sam",
+                statut: "Admin",
+                createdAt: new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime())),
+            }
+        })
+    }catch (e) {
+        error++;
+    }
+
     const benevoleDataFinal = benevoleData.map((item: { nom: string; prenom: string; email: string; password: string; pseudo: string; }) => ({
         nom: item.nom,
         prenom: item.prenom,
         email: item.email,
-        password: item.password,
+        password: bcrypt.hashSync(item.password, 10),
         pseudo: item.pseudo,
         createdAt: new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime())),
     }));
