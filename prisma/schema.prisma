@@ -39,17 +39,18 @@ model Benevole {
 
 
 model Festival {
-  id                  Int                   @id @default(autoincrement())
-  edition             String
-  dateDebut           DateTime
-  dateFin             DateTime
-  referentPostes      ReferentPoste[]
-  benevoles           FestivalBenevole[]
-  inscriptionBenevole InscriptionBenevole[]
-  festivalPostes      FestivalPoste[]
-  espacesDeJeu        EspaceDeJeu[]
-  createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @updatedAt
+  id                    Int                   @id @default(autoincrement())
+  edition               String
+  dateDebut             DateTime
+  dateFin               DateTime
+  referentPostes        ReferentPoste[]
+  benevoles             FestivalBenevole[]
+  inscriptionBenevole   InscriptionBenevole[]
+  festivalPostes        FestivalPoste[]
+  espacesDeJeu          EspaceDeJeu[]
+  jeuSousEspaceFestival JeuSousEspaceFestival[]
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
 }
 
 model Association {
@@ -152,7 +153,7 @@ model SousEspacedeJeu{
   nombreBenevoles      Int
   espaceDeJeu          EspaceDeJeu           @relation(fields: [espaceDeJeuID], references: [id])
   espaceDeJeuID        Int
-  jeux                 Jeu[]
+  jeuSousEspaceFestival JeuSousEspaceFestival[]
   createdAt            DateTime              @default(now())
   updatedAt            DateTime              @updatedAt
 }
@@ -170,7 +171,7 @@ model CreneauHoraire {
 model Jeu {
   id                   Int                  @id
   nom                  String               @unique
-  auteur               String
+  auteur               String?
   editeur              String
   nombreJoueurs        String
   ageMin               Int
@@ -181,13 +182,25 @@ model Jeu {
   aAnimer              Boolean
   benevoles            Benevole[]
   jeuBenevoles         JeuBenevole[]
-  sousEspaceDeJeuId    Int?
-  sousEspaceDeJeu      SousEspacedeJeu?      @relation(fields: [sousEspaceDeJeuId], references: [id])
+  jeuSousEspaceFestival JeuSousEspaceFestival[]
   createdAt            DateTime              @default(now())
   updatedAt            DateTime              @updatedAt
 }
 
+// Relation entre les tables : Jeu, SousEspaceDeJeu et Festival
+model JeuSousEspaceFestival {
+  id                   Int                   @id @default(autoincrement())
+  jeu                  Jeu                   @relation(fields: [jeuID], references: [id])
+  jeuID                Int
+  sousEspaceDeJeu      SousEspacedeJeu       @relation(fields: [sousEspaceDeJeuID], references: [id])
+  sousEspaceDeJeuID    Int
+  festival             Festival              @relation(fields: [festivalID], references: [id])
+  festivalID           Int
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  @@unique([jeuID, sousEspaceDeJeuID, festivalID])
 
+}
 
 
 model JeuBenevole {
