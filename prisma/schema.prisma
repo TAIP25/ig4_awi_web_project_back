@@ -18,18 +18,22 @@ model Benevole {
   tailleTShirt      String?
   vegetarien        Boolean?
   hebergement       String?
-  jeuFavori        Int?
+  jeuFavoriId         Int?
   picture           Int?
   associationID     Int?
   adresse           String?
   telephone         String?
+  jeu               Jeu?                  @relation(fields: [jeuFavoriId], references: [id]) 
   association       Association?          @relation(fields: [associationID], references: [id])
   inscriptions      InscriptionBenevole[]
   referentPostes    ReferentPoste[]
   festivalBenevoles FestivalBenevole[]
+  jeuBenevoles      JeuBenevole[]
   createdAt         DateTime              @default(now())
   updatedAt         DateTime              @updatedAt
 }
+
+
 
 
 
@@ -39,10 +43,11 @@ model Festival {
   edition             String
   dateDebut           DateTime
   dateFin             DateTime
-  //referentPostes      ReferentPoste[]
+  referentPostes      ReferentPoste[]
   benevoles           FestivalBenevole[]
   inscriptionBenevole InscriptionBenevole[]
   festivalPostes      FestivalPoste[]
+  espacesDeJeu        EspaceDeJeu[]
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
 }
@@ -85,6 +90,8 @@ model ReferentPoste {
   posteID    Int
   benevole   Benevole @relation(fields: [benevoleID], references: [id])
   benevoleID Int
+  festival   Festival @relation(fields: [festivalID], references: [id])
+  festivalID Int
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
@@ -123,7 +130,31 @@ model FestivalBenevole {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
-  //@@unique([benevoleID, festivalID])
+  @@unique([benevoleID, festivalID])
+}
+
+model EspaceDeJeu{
+  id                   Int                   @id @default(autoincrement())
+  nom                  String                @unique
+  description          String
+  nombreBenevoles      Int
+  festival             Festival              @relation(fields: [festivalID], references: [id])
+  festivalID           Int
+  sousEspaceDeJeu      SousEspacedeJeu[]
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+}
+
+model SousEspacedeJeu{
+  id                   Int                   @id @default(autoincrement())
+  lettre               String
+  description          String
+  nombreBenevoles      Int
+  espaceDeJeu          EspaceDeJeu           @relation(fields: [espaceDeJeuID], references: [id])
+  espaceDeJeuID        Int
+  jeux                 Jeu[]
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
 }
 
 model CreneauHoraire {
@@ -134,4 +165,38 @@ model CreneauHoraire {
   inscriptionBenevoles InscriptionBenevole[]
   createdAt            DateTime              @default(now())
   updatedAt            DateTime              @updatedAt
+}
+
+model Jeu {
+  id                   Int                  @id
+  nom                  String               @unique
+  auteur               String
+  editeur              String
+  nombreJoueurs        String
+  ageMin               Int
+  duree                Int
+  type                 String
+  notice               String
+  recu                 Boolean
+  aAnimer              Boolean
+  benevoles            Benevole[]
+  jeuBenevoles         JeuBenevole[]
+  sousEspaceDeJeuId    Int?
+  sousEspaceDeJeu      SousEspacedeJeu?      @relation(fields: [sousEspaceDeJeuId], references: [id])
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+}
+
+
+
+
+model JeuBenevole {
+  id        Int      @id @default(autoincrement())
+  jeu       Jeu      @relation(fields: [jeuID], references: [id])
+  jeuID     Int
+  benevole  Benevole @relation(fields: [benevoleID], references: [id])
+  benevoleID Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([benevoleID, jeuID])
 }
