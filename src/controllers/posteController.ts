@@ -73,7 +73,13 @@ export const createPoste = async (req:Request, res:Response) => {
             data: {
                 nom: req.body.nom,
                 description: req.body.description,
-                nombreBenevoles: req.body.nombreBenevoles,
+                nombreBenevoles: parseInt(req.body.nombreBenevoles),
+            },
+        });
+        await prisma.festivalPoste.create({
+            data: {
+                festivalID: parseInt(req.body.festivalId),
+                posteID: poste.id,
             },
         });
         return res.status(200).json({poste, message:"Création du poste réussie", severity: "success"});
@@ -84,22 +90,49 @@ export const createPoste = async (req:Request, res:Response) => {
 
 //================ PUT ================//
 export const updatePoste = async (req:Request, res:Response) => {
-    if(req.body.id == null || req.body.nom == null || req.body.description == null || req.body.nombreBenevoles == null){
+    if(req.params.id == null || req.body.nom == null || req.body.description == null || req.body.nombreBenevoles == null){
         return res.status(400).json({error: "Champs manquants", severity: "error"});
     }
     try{
         const poste = await prisma.poste.update({
             where: {
-                id: parseInt(req.body.id),
+                id: parseInt(req.params.id),
             },
             data: {
                 nom: req.body.nom,
                 description: req.body.description,
-                nombreBenevoles: req.body.nombreBenevoles,
+                nombreBenevoles: parseInt(req.body.nombreBenevoles),
             },
         });
         return res.status(200).json({poste, message:"Modification du poste réussie", severity: "success"});
     } catch(e){
         return res.status(500).json({error: "Erreur lors de la modification du poste", severity: "error"});
+    }
+}
+
+//================ DELETE ================//
+export const deletePoste = async (req:Request, res:Response) => {
+    if(req.params.id == null){
+        return res.status(400).json({error: "Champs manquants", severity: "error"});
+    }
+    try{
+        await prisma.festivalPoste.deleteMany({
+            where: {
+                posteID: parseInt(req.params.id),
+            },
+        });
+        await prisma.inscriptionBenevole.deleteMany({
+            where: {
+                posteID: parseInt(req.params.id),
+            },
+        });
+        await prisma.poste.delete({
+            where: {
+                id: parseInt(req.params.id),
+            },
+        });
+        return res.status(200).json({message:"Suppression du poste réussie", severity: "success"});
+    } catch(e){
+        return res.status(500).json({error: "Erreur lors de la suppression du poste", severity: "error"});
     }
 }
