@@ -122,7 +122,7 @@ export const updateBenevole = async (req:Request, res:Response) => {
             hebergement: req.body.hebergement,
             adresse: req.body.adresse,
             telephone: req.body.telephone,
-            jeuFavoriId: req.body.jeuFavori,
+            jeuFavoriId: req.body.jeuFavoriId,
         },
     });
     res.json(benevole);

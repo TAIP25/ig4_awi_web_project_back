@@ -1,5 +1,5 @@
 import express from 'express';
-import { getPostes, getPosteById, /*getPosteByName*/ createPoste, updatePoste } from '../controllers/posteController';
+import { getPostes, getPosteById, /*getPosteByName*/ createPoste, updatePoste, deletePoste } from '../controllers/posteController';
 const router = express.Router();
 
 //===== GET REQUESTS =====//
@@ -12,5 +12,8 @@ router.post('/', createPoste);
 
 //===== PUT REQUESTS =====//
 router.put('/:id', updatePoste);
+
+//===== DELETE REQUESTS =====//
+router.delete('/:id', deletePoste);
 
 export const posteRoutes = router;

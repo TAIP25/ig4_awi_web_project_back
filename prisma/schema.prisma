@@ -58,8 +58,8 @@ model Association {
 
 model Poste {
   id                   Int                   @id @default(autoincrement())
-  nom                  String
-  description          String
+  nom                  String                @unique
+  description          String                @default("No description")
   nombreBenevoles      Int
   inscriptionBenevoles InscriptionBenevole[]
   referentPostes       ReferentPoste[]
