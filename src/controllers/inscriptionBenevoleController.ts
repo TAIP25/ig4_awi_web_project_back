@@ -15,7 +15,6 @@ export const getInscriptions = async (req:Request, res:Response) => {
                 festivalID: parseInt(req.params.id),
             },
         });
-        console.log(inscription);
         return res.status(200).json({inscription, message:"Liste des inscriptions", severity: "success"});
     } catch(e){
         return res.status(500).json({error: "Erreur lors de la récupération des inscriptions", severity: "error"});
@@ -71,7 +70,6 @@ export const getInscriptionsWithStatusNull = async (_req:Request, res:Response) 
                 benevole: true,
             },
         });
-        console.log(inscriptions);
         return res.status(200).json({inscriptions, message:"Liste des inscriptions", severity: "success"});
     } catch(e){
         return res.status(500).json({error: "Erreur lors de la récupération des inscriptions", severity: "error"});
