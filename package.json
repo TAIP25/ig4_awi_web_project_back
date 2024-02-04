@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/src/server.js",
     "build": "tsc",
-    "dev": "nodemon --exec ts-node src/server.mts",
+    "dev": "nodemon --exec ts-node src/server.ts",
     "prisma": "npx prisma migrate prod --name init",
     "data": "ts-node prisma/creneauHoraireData.ts"
   },

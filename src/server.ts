@@ -1,8 +1,8 @@
-import { NODE_ENV, PORT } from "./config.js";
+import { NODE_ENV, PORT } from "./config"
 import { PrismaClient } from "@prisma/client";
 
 
-import app from "./app.js";
+import app from "./app";
 
 const prisma = new PrismaClient();
 
