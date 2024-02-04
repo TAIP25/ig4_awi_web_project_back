@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/server.js",
+    "start": "node dist/src/server.js",
     "build": "tsc",
     "dev": "nodemon --exec ts-node src/server.ts",
     "prisma": "[ -d prisma/migrations/ ] && rm -r prisma/migrations/ ; npx prisma migrate dev --name init",

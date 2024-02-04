@@ -19,4 +19,6 @@ module.exports = (req: Request, res: Response, next: NextFunction) =>{
     }catch(error){
         res.status(401).json({message: "Token d'authentification invalide !", error})
     }
+
+    return;
 }
