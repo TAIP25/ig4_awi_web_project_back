@@ -25,5 +25,5 @@
     "types" : ["node"]
   },
   "exclude": ["node_modules"],
-  "include": ["./src/**/*.ts", "./prisma/*.ts", "prisma/data/benevoleData.ts", "prisma/data/creneauHoraireData.ts"]
+  "include": ["./src/**/*.ts", "./prisma/*.ts", "prisma/data/benevoleData.ts", "prisma/data/creneauHoraireData.ts", "src/app.mts", "src/config.mts", "src/server.mts"]
 }
