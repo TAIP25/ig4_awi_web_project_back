@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node dist/src/server.js",
     "build": "tsc",
-    "dev": "nodemon --exec ts-node src/server.ts",
-    "prisma": "[ -d prisma/migrations/ ] && rm -r prisma/migrations/ ; npx prisma migrate dev --name init",
+    "dev": "nodemon --exec ts-node src/server.mts",
+    "prisma": "npx prisma migrate prod --name init",
     "data": "ts-node prisma/creneauHoraireData.ts"
   },
   "keywords": [],
@@ -37,5 +37,8 @@
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }
