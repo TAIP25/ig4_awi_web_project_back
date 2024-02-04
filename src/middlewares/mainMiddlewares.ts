@@ -2,8 +2,7 @@ import cors from 'cors';
 
 export const configCors = cors(
     {
-        origin: "*", // allow all origins
-        credentials: true, // allow cookies
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        origin: "https://festival-du-jeu-1u44.onrender.com", // allow all origins
+        
     }
 );
