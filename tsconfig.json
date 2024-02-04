@@ -22,7 +22,6 @@
     "experimentalDecorators": true,
     "resolveJsonModule": true,
     "baseUrl": ".",
-    "types" : ["node"]
   },
   "exclude": ["node_modules"],
   "include": ["./src/**/*.ts", "./prisma/*.ts", "prisma/data/benevoleData.ts", "prisma/data/creneauHoraireData.ts", "src/app.ts", "src/config.ts", "src/server.ts"]

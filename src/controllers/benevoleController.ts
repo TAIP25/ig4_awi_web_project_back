@@ -1,8 +1,8 @@
 import { PrismaClient } from '@prisma/client'
 import { Request, Response } from 'express'
 import isemail from 'isemail';
-import * as bcrypt from 'bcrypt';
-import * as jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 
 
