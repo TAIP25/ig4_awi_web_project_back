@@ -1,3 +1,3 @@
 import cors from 'cors';
 
-export const corsConfig = cors()
+export const configCors = cors()

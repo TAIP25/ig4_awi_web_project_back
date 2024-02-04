@@ -19,7 +19,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(configCors);
-
 app.use('/benevole', benevoleRoutes);
 app.use('/festival', festivalRoutes);
 app.use('/association', associationRoutes);
