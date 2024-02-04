@@ -1,8 +1,3 @@
 import cors from 'cors';
 
-export const configCors = cors(
-    {
-        origin: true,
-        credentials: true
-    }
-);
+export const corsConfig = cors()
