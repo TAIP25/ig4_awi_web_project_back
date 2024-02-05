@@ -175,6 +175,8 @@ model CreneauHoraire {
   inscriptionBenevoles InscriptionBenevole[]
   createdAt            DateTime              @default(now())
   updatedAt            DateTime              @updatedAt
+
+  @@unique([jour, heureDebut, heureFin])
 }
 
 model Jeu {
