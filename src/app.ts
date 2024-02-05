@@ -11,6 +11,7 @@ import { jeuRoutes } from './routes/jeuRoutes';
 import { espacesJeuRoutes } from './routes/espaceJeuRoutes';
 import { sousEspaceJeuRoutes } from './routes/sousEspaceJeuRoutes';
 import { jeuSousEspaceFestivalRoutes } from './routes/jeuSousEspaceFestivalRoutes';
+import { inscriptionBenevoleSousEspaceDeJeuRoutes } from './routes/inscriptionBenevoleSousEspaceDeJeuRoutes';
 
 // Create Express server
 const app = express();  
@@ -30,6 +31,7 @@ app.use('/jeu', jeuRoutes);
 app.use('/espaceJeu', espacesJeuRoutes);
 app.use('/sousEspaceJeu', sousEspaceJeuRoutes);
 app.use('/jeuSousEspaceFestival', jeuSousEspaceFestivalRoutes);
+app.use('/inscriptionBenevoleSousEspaceDeJeu', inscriptionBenevoleSousEspaceDeJeuRoutes);
 
 
 export default app;

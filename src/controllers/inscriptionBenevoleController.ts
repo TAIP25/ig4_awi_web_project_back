@@ -123,6 +123,9 @@ export const getInscriptionById = async (req:Request, res:Response) => {
 			where: {
 				id: parseInt(req.params.id),
 			},
+            include: {
+                InscriptionBenevoleSousEspaceDeJeu: true,
+            },
 		});
 		return res.status(200).json({inscription, message:"Inscription récupérée", severity: "success"});
 	} catch(e){

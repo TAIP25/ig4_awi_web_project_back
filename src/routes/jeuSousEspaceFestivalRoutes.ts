@@ -1,13 +1,18 @@
 import express from 'express';
-import * as jeuSousEspaceFestivalController from '../controllers/jeuSousEspaceFestivalController';
+import {
+  getAllJeuxSousEspaceFestival,
+  getJeuxSousEspaceFestivalByFestival,
+  createJeuSousEspaceFestival
+} from '../controllers/jeuSousEspaceFestivalController';
 const router = express.Router();
 
 
 //===== GET REQUESTS =====//
-
+router.get('/', getAllJeuxSousEspaceFestival);
+router.get('/:festivalID', getJeuxSousEspaceFestivalByFestival);
 
 //===== POST REQUESTS =====//
-router.post('/', jeuSousEspaceFestivalController.createJeuSousEspaceFestival);
+router.post('/', createJeuSousEspaceFestival);
 
 
 //===== PUT REQUESTS =====//

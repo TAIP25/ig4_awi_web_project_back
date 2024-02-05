@@ -8,6 +8,34 @@ const prisma = new PrismaClient();
 //========== GET REQUESTS ==========//
 //===================================//
 
+// GET - Récupérer tous les jeuxSousEspaceFestival
+export const getAllJeuxSousEspaceFestival = async (_:Request, res:Response) => {
+    try{
+        const jeuxSousEspaceFestival = await prisma.jeuSousEspaceFestival.findMany();
+        res.status(200).json(jeuxSousEspaceFestival);
+    }catch(e){
+        res.status(500).json({error: "Erreur lors de la récupération des jeuxSousEspaceFestival"});
+    }
+}
+
+// GET - Récupérer tous les jeuxSousEspaceFestival d'un festival
+export const getJeuxSousEspaceFestivalByFestival = async (req:Request, res:Response) => {
+    try{
+        const festivalID = parseInt(req.params.festivalID);
+        const jeuxSousEspaceFestival = await prisma.jeuSousEspaceFestival.findMany({
+            where: {
+                festivalID: festivalID
+            },
+            include: {
+                jeu: true,
+                sousEspaceDeJeu: true
+            }
+        });
+        res.status(200).json(jeuxSousEspaceFestival);
+    }catch(e){
+        res.status(500).json({error: "Erreur lors de la récupération des jeuxSousEspaceFestival"});
+    }
+}
 
 //===================================//
 //========== POST REQUESTS ==========//
@@ -15,7 +43,6 @@ const prisma = new PrismaClient();
 
 export const createJeuSousEspaceFestival = async (req:Request, res:Response) => {
     try{
-        console.log(req.body);
         const jeuSousEspaceFestival = await prisma.jeuSousEspaceFestival.create({
             data: {
                 jeuID: req.body.jeuID,
