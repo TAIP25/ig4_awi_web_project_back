@@ -18,7 +18,6 @@ export const getInscriptionsBenevoleSousEspaceDeJeu = async (req: Request, res: 
         });
         return res.status(200).json(inscriptionBenevoleSousEspaceDeJeu);
     } catch (e) {
-        console.error(e);
         return res.status(500).json({ message: "Error to get inscriptionBenevoleSousEspaceDeJeu" });
     }
 }
@@ -40,7 +39,6 @@ export const createInscriptionBenevoleSousEspaceDeJeu = async (req: Request, res
         });
         return res.status(201).json(newInscriptionBenevoleSousEspaceDeJeu);
     } catch (e) {
-        console.error(e);
         return res.status(500).json({ message: "Error to create inscriptionBenevoleSousEspaceDeJeu" });
     }
 }
