@@ -261,6 +261,13 @@ export const deleteInscription = async (req:Request, res:Response) => {
 		return res.status(400).json({error: "Champs manquants", severity: "error"});
 	}
 	try{
+        
+        await prisma.inscriptionBenevoleSousEspaceDeJeu.deleteMany({
+            where: {
+                inscriptionBenevoleID: parseInt(req.params.id),
+            },
+        });
+
 		const inscription = await prisma.inscriptionBenevole.delete({
 			where: {
 				id: parseInt(req.params.id),
