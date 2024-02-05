@@ -8,8 +8,43 @@ const prisma = new PrismaClient();
 //========== GET REQUESTS ==========//
 //===================================//
 
+// GET - Récupérer tous les espacesDeJeu
+export const getAllEspacesDeJeu = async (_:Request, res:Response) => {
+    try{
+        const espacesDeJeu = await prisma.espaceDeJeu.findMany();
+        res.status(200).json(espacesDeJeu);
+    }catch(e){
+        res.status(500).json({error: "Erreur lors de la récupération des espaces de jeu"});
+    }
+}
 
+// GET - Récupérer tous les espacesDeJeu d'un festival
+export const getEspacesDeJeuByFestivalId = async (req:Request, res:Response) => {
+    try{
+        const espacesDeJeu = await prisma.espaceDeJeu.findMany({
+            where: {
+                festivalID: parseInt(req.params.id)
+            }
+        });
+        res.status(200).json(espacesDeJeu);
+    }catch(e){
+        res.status(500).json({error: "Erreur lors de la récupération des espaces de jeu"});
+    }
+}
 
+// GET - Récupérer un espaceDeJeu par son ID
+export const getEspaceDeJeuById = async (req:Request, res:Response) => {
+    try{
+        const espaceDeJeu = await prisma.espaceDeJeu.findUnique({
+            where: {
+                id: parseInt(req.params.id)
+            }
+        });
+        res.status(200).json(espaceDeJeu);
+    }catch(e){
+        res.status(500).json({error: "Erreur lors de la récupération de l'espace de jeu"});
+    }
+}
 
 //===================================//
 //========== POST REQUESTS ==========//
