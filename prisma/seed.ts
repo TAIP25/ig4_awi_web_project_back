@@ -65,6 +65,8 @@ async function addCreneauHoraire() {
                 data: c,
             })
         } catch (e) {
+            console.log("Error dans addCreneau: ");
+            console.log(e);
             error++;
         }
     }
