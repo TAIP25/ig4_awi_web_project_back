@@ -95,35 +95,36 @@ model ReferentPoste {
 }
 
 model InscriptionBenevole {
-  id               Int            @id @default(autoincrement())
-  benevole         Benevole       @relation(fields: [benevoleID], references: [id])
-  benevoleID       Int
-  poste            Poste          @relation(fields: [posteID], references: [id])
-  posteID          Int
-  creneauHoraire   CreneauHoraire @relation(fields: [creneauHoraireID], references: [id])
-  creneauHoraireID Int
-  festival         Festival       @relation(fields: [festivalID], references: [id])
-  festivalID       Int
+  id                                 Int                                  @id @default(autoincrement())
+  benevole                           Benevole                             @relation(fields: [benevoleID], references: [id])
+  benevoleID                         Int
+  poste                              Poste                                @relation(fields: [posteID], references: [id])
+  posteID                            Int
+  creneauHoraire                     CreneauHoraire                       @relation(fields: [creneauHoraireID], references: [id])
+  creneauHoraireID                   Int
+  festival                           Festival                             @relation(fields: [festivalID], references: [id])
+  festivalID                         Int
   InscriptionBenevoleSousEspaceDeJeu InscriptionBenevoleSousEspaceDeJeu[]
-  status           String         @default("En attente")
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
+  status                             String                               @default("En attente")
+  createdAt                          DateTime                             @default(now())
+  updatedAt                          DateTime                             @updatedAt
 
   @@unique([benevoleID, posteID, creneauHoraireID, festivalID])
 }
 
 model InscriptionBenevoleSousEspaceDeJeu {
-  id                        Int                     @id @default(autoincrement())
-  inscriptionBenevole       InscriptionBenevole     @relation(fields: [inscriptionBenevoleID], references: [id])
-  inscriptionBenevoleID     Int
-  sousEspaceDeJeu           SousEspacedeJeu         @relation(fields: [sousEspaceDeJeuID], references: [id])
-  sousEspaceDeJeuID         Int
-  status                    String                  @default("En attente")
-  createdAt                 DateTime                @default(now())
-  updatedAt                 DateTime                @updatedAt
+  id                    Int                 @id @default(autoincrement())
+  inscriptionBenevole   InscriptionBenevole @relation(fields: [inscriptionBenevoleID], references: [id])
+  inscriptionBenevoleID Int
+  sousEspaceDeJeu       SousEspacedeJeu     @relation(fields: [sousEspaceDeJeuID], references: [id])
+  sousEspaceDeJeuID     Int
+  status                String              @default("En attente")
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
 
   @@unique([inscriptionBenevoleID, sousEspaceDeJeuID])
 }
+
 model FestivalBenevole {
   id                Int      @id @default(autoincrement())
   festival          Festival @relation(fields: [festivalID], references: [id])
@@ -154,16 +155,16 @@ model EspaceDeJeu {
 }
 
 model SousEspacedeJeu {
-  id                    Int                     @id
+  id                    Int                                  @id
   nom                   String
   description           String?
   nombreBenevoles       Int
-  espaceDeJeu           EspaceDeJeu             @relation(fields: [espaceDeJeuID], references: [id])
+  espaceDeJeu           EspaceDeJeu                          @relation(fields: [espaceDeJeuID], references: [id])
   espaceDeJeuID         Int
   jeuSousEspaceFestival JeuSousEspaceFestival[]
   inscriptions          InscriptionBenevoleSousEspaceDeJeu[]
-  createdAt             DateTime                @default(now())
-  updatedAt             DateTime                @updatedAt
+  createdAt             DateTime                             @default(now())
+  updatedAt             DateTime                             @updatedAt
 }
 
 model CreneauHoraire {
