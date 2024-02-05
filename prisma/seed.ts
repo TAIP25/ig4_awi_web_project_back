@@ -131,7 +131,6 @@ async function addInsciptionBenevole() {
             },
         })
     } catch (e) {
-        console.log(e);
         error++;
     }
     
