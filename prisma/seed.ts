@@ -164,22 +164,18 @@ async function main() {
     console.log(`Start seeding ...`)
 
     await addCreneauHoraire();
-    
-
-
-    if(process.env.NODE_ENV === "development") {
         
-        await addBenevole();
+    await addBenevole();
 
-        const festivals =  await addFestival();
+    const festivals =  await addFestival();
 
-        const postes = await addPoste();
+    const postes = await addPoste();
 
-        await addFestivalPoste(postes, festivals);
+    await addFestivalPoste(postes, festivals);
 
-        await addInsciptionBenevole();
+    await addInsciptionBenevole();
 
-    } else { console.log("\x1b[31m", "[WARNING] Skipping some seeds in production mode.") }
+    
 
     console.log(`Seeding finished.`)
 }
