@@ -35,7 +35,7 @@ model Benevole {
 
 model Festival {
   id                    Int                     @id @default(autoincrement())
-  edition               String
+  edition               String                  @unique
   dateDebut             DateTime
   dateFin               DateTime
   referentPostes        ReferentPoste[]
@@ -46,7 +46,10 @@ model Festival {
   jeuSousEspaceFestival JeuSousEspaceFestival[]
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
+
+  
 }
+
 
 model Association {
   id        Int        @id @default(autoincrement())
