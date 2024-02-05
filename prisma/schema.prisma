@@ -104,7 +104,7 @@ model InscriptionBenevole {
   creneauHoraireID                   Int
   festival                           Festival                             @relation(fields: [festivalID], references: [id])
   festivalID                         Int
-  //InscriptionBenevoleSousEspaceDeJeu InscriptionBenevoleSousEspaceDeJeu[]
+  InscriptionBenevoleSousEspaceDeJeu InscriptionBenevoleSousEspaceDeJeu[]
   status                             String                               @default("En attente")
   createdAt                          DateTime                             @default(now())
   updatedAt                          DateTime                             @updatedAt
@@ -114,15 +114,15 @@ model InscriptionBenevole {
 
 model InscriptionBenevoleSousEspaceDeJeu {
   id                    Int                 @id @default(autoincrement())
-  //inscriptionBenevole   InscriptionBenevole @relation(fields: [inscriptionBenevoleID], references: [id])
-  //inscriptionBenevoleID Int
+  inscriptionBenevole   InscriptionBenevole @relation(fields: [inscriptionBenevoleID], references: [id])
+  inscriptionBenevoleID Int
   sousEspaceDeJeu       SousEspacedeJeu     @relation(fields: [sousEspaceDeJeuID], references: [id])
   sousEspaceDeJeuID     Int
   status                String              @default("En attente")
   createdAt             DateTime            @default(now())
   updatedAt             DateTime            @updatedAt
 
-  //@@unique([inscriptionBenevoleID, sousEspaceDeJeuID])
+  @@unique([inscriptionBenevoleID, sousEspaceDeJeuID])
 }
 
 model FestivalBenevole {

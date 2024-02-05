@@ -12,9 +12,9 @@ export const getInscriptionsBenevoleSousEspaceDeJeu = async (req: Request, res: 
     try {
         const inscriptionID = parseInt(req.params.id);
         const inscriptionBenevoleSousEspaceDeJeu = await prisma.inscriptionBenevoleSousEspaceDeJeu.findMany({
-            /* where: {
+            where: {
                 inscriptionBenevoleID: inscriptionID
-            } */
+            }
         });
         return res.status(200).json(inscriptionBenevoleSousEspaceDeJeu);
     } catch (e) {
@@ -34,7 +34,7 @@ export const createInscriptionBenevoleSousEspaceDeJeu = async (req: Request, res
         const { inscriptionBenevoleID, sousEspaceJeuID } = req.body;
         const newInscriptionBenevoleSousEspaceDeJeu = await prisma.inscriptionBenevoleSousEspaceDeJeu.create({
             data: {
-                //inscriptionBenevoleID: parseInt(inscriptionBenevoleID),
+                inscriptionBenevoleID: parseInt(inscriptionBenevoleID),
                 sousEspaceDeJeuID: parseInt(sousEspaceJeuID)
             }
         });
