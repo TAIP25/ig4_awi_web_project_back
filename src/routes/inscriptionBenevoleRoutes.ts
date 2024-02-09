@@ -13,6 +13,8 @@ import {
   deleteInscription 
 } from '../controllers/inscriptionBenevoleController';
 const router = express.Router();
+import { auth }  from '../middlewares/login';
+
 
 //===== GET REQUESTS =====//
 router.get('/festival/:id', getInscriptions);
@@ -26,12 +28,12 @@ router.get('/festival/:id/reservations', getInscriptionsWithStatusNull);
 
 
 //===== POST REQUESTS =====//
-router.post('/', createInscription);
+router.post('/', auth, createInscription);
 
 //===== PUT REQUESTS =====//
-router.put('/:id', updateInscription);
+router.put('/:id', auth,  updateInscription);
 
 //===== DELETE REQUESTS =====//
-router.delete('/:id', deleteInscription);
+router.delete('/:id', auth, deleteInscription);
 
 export const inscriptionBenevoleRoutes = router;

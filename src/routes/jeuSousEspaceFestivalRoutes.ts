@@ -5,6 +5,7 @@ import {
   createJeuSousEspaceFestival
 } from '../controllers/jeuSousEspaceFestivalController';
 const router = express.Router();
+import { auth }  from '../middlewares/login';
 
 
 //===== GET REQUESTS =====//
@@ -12,7 +13,7 @@ router.get('/', getAllJeuxSousEspaceFestival);
 router.get('/:festivalID', getJeuxSousEspaceFestivalByFestival);
 
 //===== POST REQUESTS =====//
-router.post('/', createJeuSousEspaceFestival);
+router.post('/', auth, createJeuSousEspaceFestival);
 
 
 //===== PUT REQUESTS =====//

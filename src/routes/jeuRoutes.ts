@@ -1,6 +1,7 @@
 import express from 'express';
 import * as jeuController from '../controllers/jeuController';
 const router = express.Router();
+import { auth }  from '../middlewares/login';
 
 
 //===== GET REQUESTS =====//
@@ -13,7 +14,7 @@ router.post('/', jeuController.createJeu);
 
 
 //===== PUT REQUESTS =====//
-router.put('/', jeuController.updateJeu);
+router.put('/', auth, jeuController.updateJeu);
 
 
 //===== DELETE REQUESTS =====//

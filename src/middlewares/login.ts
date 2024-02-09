@@ -2,7 +2,7 @@
 const jwt = require("jsonwebtoken");
 import { Request, Response, NextFunction  } from 'express';
 
-module.exports = (req: Request, res: Response, next: NextFunction) =>{
+export const auth = (req: Request, res: Response, next: NextFunction) =>{
     try{
         // console.log(req.body);
         // const token = req.token;
