@@ -4,6 +4,7 @@ const router = express.Router();
 
 //===== GET REQUESTS =====//
 router.get('/', festivalBenevoleController.getAllFestivalsBenevoles);
+router.get('/:id', festivalBenevoleController.getFestivalBenevole);
 
 //===== POST REQUESTS =====//
 router.post('/', festivalBenevoleController.createFestivalBenevole);
@@ -13,6 +14,5 @@ router.post('/', festivalBenevoleController.createFestivalBenevole);
 
 //===== DELETE REQUESTS =====//
 router.delete('/:id', festivalBenevoleController.deleteFestivalBenevole);
-
 
 export const festivalBenevoleRoutes = router;
