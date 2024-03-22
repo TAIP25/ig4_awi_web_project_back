@@ -37,6 +37,21 @@ export const getAllFestivalsBenevoles = async (_req:Request, res:Response) => {
     }
 }
 
+//=== Get if the association between festival and benevole exists ===//
+export const getFestivalBenevole = async (req:Request, res:Response) => {
+    try{
+        const festivalBenevole = await prisma.festivalBenevole.findFirst({
+            where: {
+                festivalID: Number(req.params.festivalID),
+                benevoleID: Number(req.params.benevoleID)
+            }
+        });
+        res.status(200).json(festivalBenevole);
+    }catch(e){
+        res.status(400).json({error: "Erreur lors de la récupération de l'association"});  
+    }
+}
+
 
 
 //===================================//
