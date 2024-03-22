@@ -6,6 +6,7 @@ import { auth }  from '../middlewares/login';
 
 //===== GET REQUESTS =====//
 router.get('/', festivalBenevoleController.getAllFestivalsBenevoles);
+router.get('/:festivalID/:benevoleID', festivalBenevoleController.getFestivalBenevole);
 
 //===== POST REQUESTS =====//
 router.post('/', auth, festivalBenevoleController.createFestivalBenevole);
