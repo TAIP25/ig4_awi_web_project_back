@@ -1,12 +1,19 @@
-# MCD
+# Projet AWI - Back
 
-TODO : Ce n'ai pas la mm chose que sur prisma à check
+## Technologies
+
+- Express.js
+- PostgreSQL
+- Prisma
+- TypeScript
+- Mermaid
+
+## MCD
 
 ```mermaid
 erDiagram
 
     Inscription_Benevole }|--|| Creneau_Horaire : "A lieu pendant"
-    Inscription_Benevole }|--|| Espace_de_Jeu : "Est inscrit pour"
     Inscription_Benevole }|--|| Festival : "A lieu pendant"
     Inscription_Benevole {
         int ID
@@ -14,7 +21,6 @@ erDiagram
         int PosteID "FK Poste.ID"
         int CreneauHoraireID "FK Creneau_Horaire.ID"
         int FestivalID "FK Festival.ID"
-        int EspaceDeJeuID "FK Espace_de_Jeu.ID optionnel"
         bool Status "En attente=NULL / Valide=true / Refuse=false"
     }
 
@@ -83,6 +89,15 @@ erDiagram
         int EspaceDeJeuID "FK Espace_de_Jeu.ID"
     }
 
+    Inscription_Benevole_Sous_Espace_De_Jeu ||--|{ Inscription_Benevole : "Est sous-inscrit pour"
+    Inscription_Benevole_Sous_Espace_De_Jeu ||--|{ Sous_Espace_de_Jeu : "Est lié a"
+    Inscription_Benevole_Sous_Espace_De_Jeu {
+        int ID
+        int InscriptionBenevoleID "FK InscriptionBenevole.ID"
+        int SousEspaceDeJeuID "FK SousEspaceDeJeu.ID"
+        string Status "En attente/Valide/Refuse"
+    }
+
     Jeu ||--o{ Jeu_Benevole : "Est connu par"
     Jeu {
         int ID 
@@ -149,7 +164,9 @@ erDiagram
         bool teeShirtPris "Oui/Non"
     }
 
-    
 ```
 
-L'attribut **EspacedeJeuID** de la table **Inscription_Benevole** est optionnel car il n'est pas obligatoire de s'inscrire pour un espace de jeu dans le cas où l'on s'inscrit pas dans animation jeux.
+## Auteurs
+
+- [Léon BOUDIER]([https://https://github.com/TAIP25)
+- [Robin AVELINE]([https://github.com/Robinkss)
