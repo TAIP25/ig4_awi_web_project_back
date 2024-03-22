@@ -4,7 +4,7 @@ const router = express.Router();
 
 //===== GET REQUESTS =====//
 router.get('/', festivalBenevoleController.getAllFestivalsBenevoles);
-router.get('/:id', festivalBenevoleController.getFestivalBenevole);
+router.get('/:festivalID/:benevoleID', festivalBenevoleController.getFestivalBenevole);
 
 //===== POST REQUESTS =====//
 router.post('/', festivalBenevoleController.createFestivalBenevole);
