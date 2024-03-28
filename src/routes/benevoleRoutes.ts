@@ -13,11 +13,11 @@ router.post('/', benevoleController.createBenevole);
 router.post('/login', benevoleController.login);
 
 //===== PUT REQUESTS =====//
-router.put('/:id', auth, benevoleController.updateBenevole);
+router.put('/:id', benevoleController.updateBenevole);
 
 
 //===== DELETE REQUESTS =====//
-router.delete('/:id', auth, benevoleController.deleteBenevole);
+router.delete('/:id', benevoleController.deleteBenevole);
 
 
 export const benevoleRoutes = router;
