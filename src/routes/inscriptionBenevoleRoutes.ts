@@ -28,12 +28,12 @@ router.get('/festival/:id/reservations', getInscriptionsWithStatusNull);
 
 
 //===== POST REQUESTS =====//
-router.post('/', auth, createInscription);
+router.post('/', createInscription);
 
 //===== PUT REQUESTS =====//
-router.put('/:id', auth,  updateInscription);
+router.put('/:id', updateInscription);
 
 //===== DELETE REQUESTS =====//
-router.delete('/:id', auth, deleteInscription);
+router.delete('/:id', deleteInscription);
 
 export const inscriptionBenevoleRoutes = router;
