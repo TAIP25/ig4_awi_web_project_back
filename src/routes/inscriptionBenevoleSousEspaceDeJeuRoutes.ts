@@ -11,9 +11,9 @@ const router = express.Router();
 router.get('/:id', getInscriptionsBenevoleSousEspaceDeJeu);
 
 //===== POST REQUESTS =====//
-router.post('/', auth, createInscriptionBenevoleSousEspaceDeJeu);
+router.post('/', createInscriptionBenevoleSousEspaceDeJeu);
 
 //===== DELETE REQUESTS =====//
-router.delete('/:id', auth, deleteInscriptionBenevoleSousEspaceDeJeu);
+router.delete('/:id', deleteInscriptionBenevoleSousEspaceDeJeu);
 
 export const inscriptionBenevoleSousEspaceDeJeuRoutes = router;
