@@ -13,7 +13,7 @@ router.get('/', getAllJeuxSousEspaceFestival);
 router.get('/:festivalID', getJeuxSousEspaceFestivalByFestival);
 
 //===== POST REQUESTS =====//
-router.post('/', auth, createJeuSousEspaceFestival);
+router.post('/', createJeuSousEspaceFestival);
 
 
 //===== PUT REQUESTS =====//
