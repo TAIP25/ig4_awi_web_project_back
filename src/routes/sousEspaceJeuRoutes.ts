@@ -9,7 +9,7 @@ import { auth }  from '../middlewares/login';
 
 
 //===== POST REQUESTS =====//
-router.post('/', auth, sousEspaceJeuController.createSousEspaceDeJeu);
+router.post('/', sousEspaceJeuController.createSousEspaceDeJeu);
 
 
 
