@@ -6,7 +6,7 @@ import { auth }  from '../middlewares/login';
 
 
 //===== GET REQUESTS =====//
-
+router.get('/', sousEspaceJeuController.getSousEspacesDeJeu);
 
 //===== POST REQUESTS =====//
 router.post('/', sousEspaceJeuController.createSousEspaceDeJeu);
