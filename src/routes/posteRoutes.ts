@@ -10,12 +10,12 @@ router.get('/:id', getPosteById);
 //router.get('/festival/:id/nom/:nom', getPosteByName);
 
 //===== POST REQUESTS =====//
-router.post('/', auth, createPoste);
+router.post('/', createPoste);
 
 //===== PUT REQUESTS =====//
-router.put('/:id', auth, updatePoste);
+router.put('/:id', updatePoste);
 
 //===== DELETE REQUESTS =====//
-router.delete('/:id', auth,  deletePoste);
+router.delete('/:id', deletePoste);
 
 export const posteRoutes = router;
