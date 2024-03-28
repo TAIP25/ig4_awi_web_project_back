@@ -11,7 +11,7 @@ router.get('/festival/:id', espacesJeuController.getEspacesDeJeuByFestivalId);
 router.get('/:id', espacesJeuController.getEspaceDeJeuById);
 
 //===== POST REQUESTS =====//
-router.post('/', auth, espacesJeuController.createEspaceDeJeu);
+router.post('/', espacesJeuController.createEspaceDeJeu);
 
 
 
