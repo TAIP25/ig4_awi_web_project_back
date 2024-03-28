@@ -11,12 +11,12 @@ router.get('/:id', festivalController.getFestivalById);
 
 
 //===== POST REQUESTS =====//
-router.post('/', auth, festivalController.createFestival);
+router.post('/', festivalController.createFestival);
 
 //===== PUT REQUESTS =====//
-router.put('/:id', auth, festivalController.updateFestival);
+router.put('/:id', festivalController.updateFestival);
 
 //===== DELETE REQUESTS =====//
-router.delete('/:id', auth, festivalController.deleteFestival);
+router.delete('/:id', festivalController.deleteFestival);
 
 export const festivalRoutes = router;
