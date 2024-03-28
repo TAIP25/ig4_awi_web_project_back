@@ -14,7 +14,7 @@ router.post('/', jeuController.createJeu);
 
 
 //===== PUT REQUESTS =====//
-router.put('/', auth, jeuController.updateJeu);
+router.put('/', jeuController.updateJeu);
 
 
 //===== DELETE REQUESTS =====//
