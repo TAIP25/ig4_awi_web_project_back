@@ -7,6 +7,15 @@ const prisma = new PrismaClient();
 //===================================//
 //========== GET REQUESTS ==========//
 //===================================//
+// GET - Récupérer tous les espacesDeJeu 
+export const getSousEspacesDeJeu = async (req:Request, res:Response) => {
+    try{
+        const sousEspacesDeJeu = await prisma.sousEspacedeJeu.findMany();
+        res.status(200).json(sousEspacesDeJeu);
+    }catch(e){
+        res.status(500).json({error: "Erreur lors de la récupération des sous espaces de jeu"});
+    }
+}
 
 
 
