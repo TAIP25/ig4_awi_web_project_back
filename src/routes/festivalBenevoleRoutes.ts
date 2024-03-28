@@ -9,13 +9,13 @@ router.get('/', festivalBenevoleController.getAllFestivalsBenevoles);
 router.get('/:festivalID/:benevoleID', festivalBenevoleController.getFestivalBenevole);
 
 //===== POST REQUESTS =====//
-router.post('/', auth, festivalBenevoleController.createFestivalBenevole);
+router.post('/', festivalBenevoleController.createFestivalBenevole);
 
 //===== PUT REQUESTS =====//
 
 
 //===== DELETE REQUESTS =====//
-router.delete('/:id', auth, festivalBenevoleController.deleteFestivalBenevole);
+router.delete('/:id', festivalBenevoleController.deleteFestivalBenevole);
 
 
 export const festivalBenevoleRoutes = router;
