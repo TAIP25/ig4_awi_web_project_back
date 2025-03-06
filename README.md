@@ -8,7 +8,7 @@
 - TypeScript
 - Mermaid
 
-## MCD
+## MCD 
 
 ```mermaid
 erDiagram
